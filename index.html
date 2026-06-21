@@ -302,9 +302,9 @@
               <div class="auth-tab" id="tab-register-btn" onclick="toggleAuthTab('register')">Register</div>
             </div>
 
-            <div class="auth-slider" id="auth-slider">
-              <!-- SIGN IN SLIDE -->
-              <div class="auth-slide">
+            <div class="auth-forms-container">
+              <!-- SIGN IN FORM -->
+              <div class="auth-form-view" id="login-form-view">
                 <form id="login-form" onsubmit="handleLoginSubmit(event)">
                   <div class="form-group">
                     <label class="form-label" for="login-email">Email or Phone Number</label>
@@ -323,8 +323,8 @@
                 </form>
               </div>
 
-              <!-- REGISTRATION SLIDE -->
-              <div class="auth-slide">
+              <!-- REGISTRATION FORM -->
+              <div class="auth-form-view" id="register-form-view" style="display: none;">
                 <form id="register-form" onsubmit="handleRegisterSubmit(event)">
                   <div class="form-group row-group">
                     <div class="sub-group">

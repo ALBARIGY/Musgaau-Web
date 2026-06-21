@@ -550,14 +550,15 @@ function navigateTo(viewId, subAction = null) {
 let currentAuthTab = 'login';
 
 function toggleAuthTab(tab) {
-  const slider = document.getElementById('auth-slider');
+  const loginFormView = document.getElementById('login-form-view');
+  const registerFormView = document.getElementById('register-form-view');
   const loginBtn = document.getElementById('tab-login-btn');
   const registerBtn = document.getElementById('tab-register-btn');
   const switchLink = document.getElementById('auth-switch-text');
   const title = document.getElementById('auth-title');
   const subtitle = document.getElementById('auth-subtitle');
   
-  if (!slider) return;
+  if (!loginFormView || !registerFormView) return;
   
   if (tab === 'switch') {
     tab = currentAuthTab === 'login' ? 'register' : 'login';
@@ -566,14 +567,16 @@ function toggleAuthTab(tab) {
   currentAuthTab = tab;
   
   if (tab === 'login') {
-    slider.classList.remove('slide-register');
+    loginFormView.style.display = 'block';
+    registerFormView.style.display = 'none';
     loginBtn.classList.add('active');
     registerBtn.classList.remove('active');
     switchLink.innerHTML = "Don't have an account? <span>Sign Up</span>";
     title.textContent = "Alumni Portal";
     subtitle.textContent = "Sign in to access your dashboard";
   } else {
-    slider.classList.add('slide-register');
+    loginFormView.style.display = 'none';
+    registerFormView.style.display = 'block';
     loginBtn.classList.remove('active');
     registerBtn.classList.add('active');
     switchLink.innerHTML = "Already registered? <span>Sign In</span>";
