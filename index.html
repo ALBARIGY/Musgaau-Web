@@ -69,6 +69,30 @@
               <span>Global Majlis</span>
             </a>
           </li>
+          <li class="nav-item" id="nav-events" style="display:none;">
+            <a onclick="navigateTo('events')">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              <span>Events</span>
+            </a>
+          </li>
+          <li class="nav-item" id="nav-jobs" style="display:none;">
+            <a onclick="navigateTo('jobs')">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              <span>Job Board</span>
+            </a>
+          </li>
+          <li class="nav-item" id="nav-gallery" style="display:none;">
+            <a onclick="navigateTo('gallery')">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+              <span>Gallery</span>
+            </a>
+          </li>
+          <li class="nav-item" id="nav-mentorship" style="display:none;">
+            <a onclick="navigateTo('mentorship')">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="23" y1="11" x2="17" y2="11"></line><line x1="20" y1="8" x2="20" y2="14"></line></svg>
+              <span>Mentorship</span>
+            </a>
+          </li>
           <li class="nav-item" id="nav-chat" style="display:none;">
             <a onclick="navigateTo('chat')">
               <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
@@ -79,6 +103,12 @@
             <a onclick="navigateTo('dues')">
               <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
               <span>My Dues</span>
+            </a>
+          </li>
+          <li class="nav-item" id="nav-settings" style="display:none;">
+            <a onclick="navigateTo('settings')">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              <span>Settings</span>
             </a>
           </li>
           <li class="nav-item gold-link" id="nav-admin">
@@ -112,21 +142,17 @@
         <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         <span>Home</span>
       </a>
-      <a onclick="navigateTo('about')" class="mobile-nav-item" id="mob-nav-about">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-        <span>About</span>
-      </a>
-      <a onclick="navigateTo('contact')" class="mobile-nav-item" id="mob-nav-contact">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-        <span>Contact</span>
-      </a>
       <a onclick="navigateTo('dashboard')" class="mobile-nav-item" id="mob-nav-dashboard" style="display:none;">
         <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
         <span>Dashboard</span>
       </a>
-      <a onclick="navigateTo('directory')" class="mobile-nav-item" id="mob-nav-directory" style="display:none;">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-        <span>Directory</span>
+      <a onclick="navigateTo('events')" class="mobile-nav-item" id="mob-nav-events" style="display:none;">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        <span>Events</span>
+      </a>
+      <a onclick="navigateTo('jobs')" class="mobile-nav-item" id="mob-nav-jobs" style="display:none;">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        <span>Jobs</span>
       </a>
       <a onclick="navigateTo('majlis')" class="mobile-nav-item" id="mob-nav-majlis" style="display:none;">
         <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
@@ -139,6 +165,10 @@
       <a onclick="navigateTo('dues')" class="mobile-nav-item" id="mob-nav-dues" style="display:none;">
         <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
         <span>My Dues</span>
+      </a>
+      <a onclick="navigateTo('directory')" class="mobile-nav-item" id="mob-nav-directory" style="display:none;">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+        <span>Directory</span>
       </a>
       <a onclick="navigateTo('admin')" class="mobile-nav-item" id="mob-nav-admin">
         <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
@@ -153,8 +183,17 @@
     <!-- MAIN VIEW AREA -->
     <main class="main-content">
       
-      <!-- Upper Actions Pane (Theme and Logout) -->
+      <!-- Upper Actions Pane (Theme, Search, Notifications, Logout) -->
       <div class="header-actions">
+        <!-- Global Search Button -->
+        <button class="action-btn" id="global-search-btn" onclick="openGlobalSearch()" style="display:none;" aria-label="Global Search">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+        <!-- Notifications Bell Button -->
+        <button class="action-btn notif-btn" id="notif-bell-btn" onclick="toggleNotificationsPanel()" style="display:none;" aria-label="Notifications">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="notif-badge" id="notif-badge-count" style="display:none;">0</span>
+        </button>
         <button class="action-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
           <!-- Sun Icon -->
           <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="theme-icon-sun">
@@ -169,6 +208,27 @@
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line>
           </svg>
         </button>
+      </div>
+
+      <!-- NOTIFICATIONS PANEL (Dropdown Overlay) -->
+      <div class="notif-panel" id="notif-panel" style="display:none;">
+        <div class="notif-panel-header">
+          <h3>Notifications</h3>
+          <button onclick="closeNotificationsPanel()" style="background:none;border:none;color:var(--text-gray);cursor:pointer;font-size:1.2rem;">×</button>
+        </div>
+        <div id="notif-list-container"><!-- Dynamic --></div>
+      </div>
+
+      <!-- GLOBAL SEARCH OVERLAY -->
+      <div class="search-overlay" id="global-search-overlay" onclick="closeGlobalSearchIfOutside(event)" style="display:none;">
+        <div class="search-overlay-box" onclick="event.stopPropagation()">
+          <div class="search-overlay-input-row">
+            <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="global-search-input" class="form-control" placeholder="Search alumni, posts, jobs..." oninput="handleGlobalSearch()" autocomplete="off">
+            <button onclick="closeGlobalSearch()" style="background:none;border:none;color:var(--text-gray);cursor:pointer;font-size:1.5rem;padding:0 0.5rem;">×</button>
+          </div>
+          <div id="global-search-results"><!-- Dynamic --></div>
+        </div>
       </div>
 
       <!-- VIEW 1: LANDING/HERO PAGE -->
@@ -950,6 +1010,7 @@
             <button class="admin-tab-btn active" id="btn-admin-tab-members" onclick="toggleAdminSubView('members')">Member Approvals</button>
             <button class="admin-tab-btn" id="btn-admin-tab-dues" onclick="toggleAdminSubView('dues')">Dues Ledger</button>
             <button class="admin-tab-btn" id="btn-admin-tab-posts" onclick="toggleAdminSubView('posts')">Official Announcements</button>
+            <button class="admin-tab-btn" id="btn-admin-tab-analytics" onclick="toggleAdminSubView('analytics')">Analytics</button>
             <button class="admin-tab-btn" id="btn-admin-tab-settings" onclick="toggleAdminSubView('settings')" style="display:none;">System Settings</button>
           </div>
 
@@ -1058,7 +1119,40 @@
             </div>
           </div>
 
-          <!-- Sub-View 4: System Settings (Super Admin Only) -->
+          <!-- Sub-View 4: Analytics Dashboard -->
+          <div class="admin-sub-view" id="admin-sub-view-analytics">
+            <h3 style="font-family:var(--font-title); margin-bottom:1.5rem; font-size:1.2rem;">Association Analytics</h3>
+            <div class="admin-stats-row" id="analytics-kpi-row">
+              <div class="glass-card" style="background:rgba(0,0,0,0.15); padding:1.5rem; border-radius:16px; text-align:center;">
+                <div style="font-size:2rem; font-weight:800; font-family:var(--font-title); color:var(--emerald-mint);" id="analytic-total-members">0</div>
+                <div style="font-size:0.75rem; color:var(--text-gray); margin-top:4px; text-transform:uppercase; font-weight:600;">Total Members</div>
+              </div>
+              <div class="glass-card" style="background:rgba(0,0,0,0.15); padding:1.5rem; border-radius:16px; text-align:center;">
+                <div style="font-size:2rem; font-weight:800; font-family:var(--font-title); color:var(--gold-primary);" id="analytic-dues-rate">0%</div>
+                <div style="font-size:0.75rem; color:var(--text-gray); margin-top:4px; text-transform:uppercase; font-weight:600;">Dues Collection Rate</div>
+              </div>
+              <div class="glass-card" style="background:rgba(0,0,0,0.15); padding:1.5rem; border-radius:16px; text-align:center;">
+                <div style="font-size:2rem; font-weight:800; font-family:var(--font-title); color:var(--emerald-mint);" id="analytic-pending">0</div>
+                <div style="font-size:0.75rem; color:var(--text-gray); margin-top:4px; text-transform:uppercase; font-weight:600;">Pending Approvals</div>
+              </div>
+              <div class="glass-card" style="background:rgba(0,0,0,0.15); padding:1.5rem; border-radius:16px; text-align:center;">
+                <div style="font-size:2rem; font-weight:800; font-family:var(--font-title); color:var(--gold-primary);" id="analytic-posts">0</div>
+                <div style="font-size:0.75rem; color:var(--text-gray); margin-top:4px; text-transform:uppercase; font-weight:600;">Forum Posts</div>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+              <div class="glass-card" style="background:rgba(0,0,0,0.15); padding:1.5rem;">
+                <h4 style="font-family:var(--font-title); color:var(--emerald-mint); margin-bottom:1.25rem; font-size:1rem;">Department Breakdown</h4>
+                <div id="analytics-dept-breakdown"><!-- Dynamic bars --></div>
+              </div>
+              <div class="glass-card" style="background:rgba(0,0,0,0.15); padding:1.5rem;">
+                <h4 style="font-family:var(--font-title); color:var(--gold-primary); margin-bottom:1.25rem; font-size:1rem;">Employment Status Split</h4>
+                <div id="analytics-employment-breakdown"><!-- Dynamic bars --></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-View 5: System Settings (Super Admin Only) -->
           <div class="admin-sub-view" id="admin-sub-view-settings">
             <h3 style="font-family: var(--font-title); margin-bottom: 1.5rem; font-size: 1.2rem; color: var(--emerald-mint);">Global Configuration Parameters</h3>
             
@@ -1123,8 +1217,287 @@
       </div>
     </section>
 
+      <!-- VIEW: EVENTS & CALENDAR -->
+      <section class="app-view" id="view-events">
+        <div class="glass-card" style="margin-bottom:2rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; flex-wrap:wrap; gap:1rem;">
+            <h2 style="font-family:var(--font-title); font-size:2rem;">Events &amp; Calendar</h2>
+            <button class="btn btn-primary" id="create-event-btn" style="display:none; padding:0.75rem 1.5rem; border-radius:12px;" onclick="openCreateEventModal()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Create Event</span>
+            </button>
+          </div>
+          <div class="events-grid" id="events-list-container"><!-- Dynamic --></div>
+        </div>
+      </section>
+
+      <!-- VIEW: JOB BOARD -->
+      <section class="app-view" id="view-jobs">
+        <div class="glass-card" style="margin-bottom:2rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; flex-wrap:wrap; gap:1rem;">
+            <h2 style="font-family:var(--font-title); font-size:2rem;">Job Board</h2>
+            <button class="btn btn-primary" style="padding:0.75rem 1.5rem; border-radius:12px;" onclick="openPostJobModal()" id="post-job-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Post a Job</span>
+            </button>
+          </div>
+          <div style="display:flex; gap:1rem; margin-bottom:2rem; flex-wrap:wrap;">
+            <div class="search-box" style="flex:1; min-width:240px;">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="jobs-search-input" class="form-control" placeholder="Search jobs by title, company, or skill..." oninput="filterJobs()">
+            </div>
+            <select id="jobs-filter-type" class="form-control" style="max-width:180px;" onchange="filterJobs()">
+              <option value="all">All Types</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Remote">Remote</option>
+              <option value="Internship">Internship</option>
+              <option value="Contract">Contract</option>
+            </select>
+          </div>
+          <div class="jobs-grid" id="jobs-list-container"><!-- Dynamic --></div>
+        </div>
+      </section>
+
+      <!-- VIEW: GALLERY -->
+      <section class="app-view" id="view-gallery">
+        <div class="glass-card">
+          <h2 style="font-family:var(--font-title); font-size:2rem; margin-bottom:0.5rem;">Association Gallery</h2>
+          <p style="color:var(--text-gray); margin-bottom:2rem; font-size:0.95rem;">Memories from reunions, conferences, and community events.</p>
+          <div class="gallery-filter-row" id="gallery-filter-row"><!-- Dynamic category filters --></div>
+          <div class="gallery-masonry" id="gallery-grid-container"><!-- Dynamic --></div>
+        </div>
+      </section>
+
+      <!-- VIEW: MENTORSHIP -->
+      <section class="app-view" id="view-mentorship">
+        <div class="glass-card" style="margin-bottom:2rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <h2 style="font-family:var(--font-title); font-size:2rem;">Mentorship Hub</h2>
+              <p style="color:var(--text-gray); font-size:0.9rem; margin-top:0.25rem;">Connect with experienced alumni for career guidance and professional growth.</p>
+            </div>
+            <button class="btn btn-primary" style="padding:0.75rem 1.5rem; border-radius:12px;" id="become-mentor-btn" onclick="toggleMentorStatus()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="23" y1="11" x2="17" y2="11"></line><line x1="20" y1="8" x2="20" y2="14"></line></svg>
+              <span id="mentor-btn-label">Become a Mentor</span>
+            </button>
+          </div>
+          <div class="mentors-grid" id="mentors-list-container"><!-- Dynamic --></div>
+        </div>
+      </section>
+
+      <!-- VIEW: ACCOUNT SETTINGS -->
+      <section class="app-view" id="view-settings">
+        <div class="glass-card" style="max-width:800px; margin:0 auto;">
+          <h2 style="font-family:var(--font-title); font-size:2rem; margin-bottom:2rem;">Account Settings</h2>
+
+          <!-- Change Password -->
+          <div class="settings-section">
+            <h3 class="settings-section-title"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Change Password</h3>
+            <form id="settings-password-form" onsubmit="handleChangePassword(event)" style="display:flex; flex-direction:column; gap:1rem;">
+              <div class="form-group row-group" style="margin-bottom:0;">
+                <div class="sub-group">
+                  <label class="form-label">Current Password</label>
+                  <input type="password" id="settings-current-pass" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+                </div>
+                <div class="sub-group">
+                  <label class="form-label">New Password</label>
+                  <input type="password" id="settings-new-pass" class="form-control" placeholder="Min. 6 characters" required autocomplete="new-password">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary" style="align-self:flex-start; padding:0.75rem 1.5rem; border-radius:12px;"><span>Update Password</span></button>
+            </form>
+          </div>
+
+          <!-- Notification Preferences -->
+          <div class="settings-section">
+            <h3 class="settings-section-title"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> Notification Preferences</h3>
+            <div style="display:flex; flex-direction:column; gap:1rem;">
+              <div class="settings-toggle-row">
+                <div><div style="font-weight:600; font-size:0.9rem;">New Direct Messages</div><div style="font-size:0.75rem; color:var(--text-gray);">Get notified when you receive a new Salaam</div></div>
+                <label class="toggle-switch"><input type="checkbox" id="notif-pref-messages" checked onchange="saveNotifPrefs()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-toggle-row">
+                <div><div style="font-weight:600; font-size:0.9rem;">Majlis Forum Activity</div><div style="font-size:0.75rem; color:var(--text-gray);">Be notified of new posts in the Global Majlis</div></div>
+                <label class="toggle-switch"><input type="checkbox" id="notif-pref-majlis" checked onchange="saveNotifPrefs()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-toggle-row">
+                <div><div style="font-weight:600; font-size:0.9rem;">Dues &amp; Payment Reminders</div><div style="font-size:0.75rem; color:var(--text-gray);">Receive reminders about upcoming payment deadlines</div></div>
+                <label class="toggle-switch"><input type="checkbox" id="notif-pref-dues" checked onchange="saveNotifPrefs()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-toggle-row">
+                <div><div style="font-weight:600; font-size:0.9rem;">Event Announcements</div><div style="font-size:0.75rem; color:var(--text-gray);">Alerts when new events are created by the committee</div></div>
+                <label class="toggle-switch"><input type="checkbox" id="notif-pref-events" checked onchange="saveNotifPrefs()"><span class="toggle-slider"></span></label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Privacy Settings -->
+          <div class="settings-section">
+            <h3 class="settings-section-title"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Privacy Controls</h3>
+            <div style="display:flex; flex-direction:column; gap:1rem;">
+              <div class="settings-toggle-row">
+                <div><div style="font-weight:600; font-size:0.9rem;">Show Marital Status in Directory</div><div style="font-size:0.75rem; color:var(--text-gray);">Other members can see your marital status on your profile card</div></div>
+                <label class="toggle-switch"><input type="checkbox" id="privacy-show-marital" checked onchange="savePrivacyPrefs()"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-toggle-row">
+                <div><div style="font-weight:600; font-size:0.9rem;">Allow Direct Messages from All Members</div><div style="font-size:0.75rem; color:var(--text-gray);">If disabled, only your connections can message you</div></div>
+                <label class="toggle-switch"><input type="checkbox" id="privacy-allow-dm" checked onchange="savePrivacyPrefs()"><span class="toggle-slider"></span></label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Danger Zone -->
+          <div class="settings-section" style="border-color: rgba(239, 68, 68, 0.25);">
+            <h3 class="settings-section-title" style="color:#f87171;"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Danger Zone</h3>
+            <p style="font-size:0.85rem; color:var(--text-gray); margin-bottom:1rem;">These actions are permanent and irreversible. Proceed with caution.</p>
+            <button class="btn" style="background:rgba(239,68,68,0.1); border:1px solid #ef4444; color:#f87171; padding:0.75rem 1.5rem; border-radius:12px;" onclick="handleDeactivateAccount()"><span>Deactivate My Account</span></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: SEARCH RESULTS -->
+      <section class="app-view" id="view-search">
+        <div class="glass-card">
+          <h2 style="font-family:var(--font-title); font-size:2rem; margin-bottom:0.5rem;">Search Results</h2>
+          <p style="color:var(--text-gray); margin-bottom:2rem; font-size:0.9rem;" id="search-results-subtitle">Showing results...</p>
+          <div id="search-results-page-container"><!-- Dynamic --></div>
+        </div>
+      </section>
+
+      <!-- VIEW: 404 / NOT FOUND -->
+      <section class="app-view" id="view-404">
+        <div style="display:flex; align-items:center; justify-content:center; min-height:calc(100vh - 10rem);">
+          <div class="glass-card" style="text-align:center; max-width:480px; padding:3rem; position:relative; overflow:hidden;">
+            <div class="landing-glow" style="width:300px;height:300px;"></div>
+            <div style="font-family:var(--font-title); font-size:6rem; font-weight:800; background:linear-gradient(135deg,var(--emerald-mint),var(--gold-primary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1;">404</div>
+            <h2 style="font-family:var(--font-title); font-size:1.5rem; margin:1rem 0 0.5rem;">Page Not Found</h2>
+            <p style="color:var(--text-gray); margin-bottom:2rem; font-size:0.9rem;">The section you are looking for doesn't exist or requires authentication.</p>
+            <button class="btn btn-primary" onclick="navigateTo('landing')" style="padding:0.75rem 1.75rem; border-radius:12px;"><span>Return Home</span></button>
+          </div>
+        </div>
+      </section>
+
     </main>
 
+    <!-- SITE FOOTER (Public Pages) -->
+    <footer class="site-footer" id="site-footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <img src="logo.jpg" alt="MUSGAAU Logo" style="width:36px;height:36px;border-radius:8px;object-fit:contain;">
+          <div>
+            <div style="font-family:var(--font-title); font-weight:800; font-size:1rem; background:linear-gradient(135deg,var(--emerald-mint),var(--gold-primary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">MUSGAAU</div>
+            <div style="font-size:0.7rem; color:var(--text-gray);">Alumni Portal</div>
+          </div>
+        </div>
+        <div class="footer-links">
+          <a onclick="navigateTo('about')">About</a>
+          <a onclick="navigateTo('contact')">Contact</a>
+          <a onclick="navigateTo('auth')">Join</a>
+          <a onclick="navigateTo('events')">Events</a>
+        </div>
+        <div class="footer-copy">© 2026 MUSGAAU. All rights reserved. Muslim Graduates Alumni, AAUA.</div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- CREATE EVENT MODAL -->
+  <div class="modal-overlay" id="create-event-modal" onclick="closeCreateEventModal(event)">
+    <div class="glass-card modal-card" onclick="event.stopPropagation()" style="max-width:520px;">
+      <div class="modal-header-section" style="margin-bottom:1.5rem;">
+        <h3 style="font-family:var(--font-title); font-size:1.4rem; color:var(--emerald-mint);">Create New Event</h3>
+        <button class="modal-close-btn" onclick="closeCreateEventModal(null)">×</button>
+      </div>
+      <form id="create-event-form" onsubmit="handleCreateEvent(event)" style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Event Title</label>
+          <input type="text" id="event-title-input" class="form-control" placeholder="Annual Reunion 2026" required>
+        </div>
+        <div class="form-group row-group" style="margin-bottom:0;">
+          <div class="sub-group">
+            <label class="form-label">Date</label>
+            <input type="date" id="event-date-input" class="form-control" required>
+          </div>
+          <div class="sub-group">
+            <label class="form-label">Category</label>
+            <select id="event-cat-input" class="form-control">
+              <option value="Reunion">Reunion</option>
+              <option value="Conference">Conference</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Prayer">Prayer Gathering</option>
+              <option value="Fundraiser">Fundraiser</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Location / Venue</label>
+          <input type="text" id="event-venue-input" class="form-control" placeholder="Abuja International Center" required>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Description</label>
+          <textarea id="event-desc-input" class="form-control" style="height:80px; resize:none;" placeholder="Event details, agenda, dress code..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="justify-content:center; margin-top:0.5rem;"><span>Publish Event</span></button>
+      </form>
+    </div>
+  </div>
+
+  <!-- POST JOB MODAL -->
+  <div class="modal-overlay" id="post-job-modal" onclick="closePostJobModal(event)">
+    <div class="glass-card modal-card" onclick="event.stopPropagation()" style="max-width:540px;">
+      <div class="modal-header-section" style="margin-bottom:1.5rem;">
+        <h3 style="font-family:var(--font-title); font-size:1.4rem; color:var(--emerald-mint);">Post a Job Listing</h3>
+        <button class="modal-close-btn" onclick="closePostJobModal(null)">×</button>
+      </div>
+      <form id="post-job-form" onsubmit="handlePostJob(event)" style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="form-group row-group" style="margin-bottom:0;">
+          <div class="sub-group">
+            <label class="form-label">Job Title</label>
+            <input type="text" id="job-title-input" class="form-control" placeholder="Software Engineer" required>
+          </div>
+          <div class="sub-group">
+            <label class="form-label">Company</label>
+            <input type="text" id="job-company-input" class="form-control" placeholder="Microsoft Nigeria" required>
+          </div>
+        </div>
+        <div class="form-group row-group" style="margin-bottom:0;">
+          <div class="sub-group">
+            <label class="form-label">Location</label>
+            <input type="text" id="job-location-input" class="form-control" placeholder="Lagos, Nigeria" required>
+          </div>
+          <div class="sub-group">
+            <label class="form-label">Type</label>
+            <select id="job-type-input" class="form-control">
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Remote">Remote</option>
+              <option value="Internship">Internship</option>
+              <option value="Contract">Contract</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row-group" style="margin-bottom:0;">
+          <div class="sub-group">
+            <label class="form-label">Salary Range (Optional)</label>
+            <input type="text" id="job-salary-input" class="form-control" placeholder="₦300k–₦500k / month">
+          </div>
+          <div class="sub-group">
+            <label class="form-label">Department / Field</label>
+            <input type="text" id="job-field-input" class="form-control" placeholder="Technology, Finance..." required>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Job Description</label>
+          <textarea id="job-desc-input" class="form-control" style="height:80px; resize:none;" placeholder="Roles, responsibilities, requirements..." required></textarea>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Application Link / Contact (Optional)</label>
+          <input type="text" id="job-link-input" class="form-control" placeholder="https://apply.example.com or email address">
+        </div>
+        <button type="submit" class="btn btn-primary" style="justify-content:center; margin-top:0.5rem;"><span>Publish Job Listing</span></button>
+      </form>
+    </div>
   </div>
 
   <!-- MOCK DUES CREDIT CARD PAYMENT MODAL -->

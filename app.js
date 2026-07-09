@@ -458,7 +458,9 @@ let currentActiveView = 'landing';
 function navigateTo(viewId, subAction = null) {
   // Authentication Guard for Protected Views
   const protectedViews = ['dashboard', 'majlis', 'chat', 'profile', 'dues'];
-  
+  // New section protected views
+  const newProtectedViews = ['events', 'jobs', 'gallery', 'mentorship', 'settings', 'search'];
+
   // Custom directory configuration checks
   if (viewId === 'directory') {
     const isGuestDirectoryEnabled = DB.settings ? DB.settings.guestDirectoryEnabled : true;
@@ -467,12 +469,16 @@ function navigateTo(viewId, subAction = null) {
       navigateTo('auth');
       return;
     }
+  } else if (newProtectedViews.includes(viewId) && !DB.currentUser) {
+    triggerAlert('Please sign in to access this section.', true);
+    navigateTo('auth');
+    return;
   } else if (protectedViews.includes(viewId) && !DB.currentUser) {
     triggerAlert('Access denied. Please sign in or register to view this page.', true);
     navigateTo('auth');
     return;
   }
-  
+
   const activeUser = DB.members.find(m => m.email === DB.currentUser);
   if (activeUser && activeUser.status === 'pending') {
     if (viewId !== 'pending-notice' && viewId !== 'profile' && viewId !== 'landing') {
@@ -481,36 +487,30 @@ function navigateTo(viewId, subAction = null) {
       return;
     }
   }
-  
+
   // Hide all view panels
   const views = document.querySelectorAll('.app-view');
   views.forEach(v => v.classList.remove('active-view'));
-  
+
   // Show target view panel
   const targetView = document.getElementById(`view-${viewId}`);
   if (targetView) {
     targetView.classList.add('active-view');
     currentActiveView = viewId;
   }
-  
+
   // Sync Desktop Sidebar Active State
   const navItems = document.querySelectorAll('.sidebar .nav-item');
   navItems.forEach(item => item.classList.remove('active'));
-  
   const activeNav = document.getElementById(`nav-${viewId}`);
-  if (activeNav) {
-    activeNav.classList.add('active');
-  }
-  
+  if (activeNav) activeNav.classList.add('active');
+
   // Sync Mobile Bottom Nav Active State
   const mobItems = document.querySelectorAll('.mobile-nav-item');
   mobItems.forEach(item => item.classList.remove('active'));
-  
   const activeMob = document.getElementById(`mob-nav-${viewId}`);
-  if (activeMob) {
-    activeMob.classList.add('active');
-  }
-  
+  if (activeMob) activeMob.classList.add('active');
+
   // Sub-Actions inside views
   if (viewId === 'auth') {
     if (subAction === 'register') {
@@ -519,7 +519,15 @@ function navigateTo(viewId, subAction = null) {
       toggleAuthTab('login');
     }
   }
-  
+
+  // Show/hide public footer
+  const footer = document.getElementById('site-footer');
+  const publicViews = ['landing', 'about', 'contact'];
+  if (footer) footer.style.display = publicViews.includes(viewId) ? 'block' : 'none';
+
+  // Close notification panel if open
+  if (typeof closeNotificationsPanel === 'function') closeNotificationsPanel();
+
   // Load view-specific content triggers
   if (viewId === 'landing') {
     renderPublicAnnouncements();
@@ -537,8 +545,19 @@ function navigateTo(viewId, subAction = null) {
     renderDuesPage();
   } else if (viewId === 'admin') {
     renderAdminPanel();
+    if (typeof renderAnalytics === 'function') renderAnalytics();
+  } else if (viewId === 'events') {
+    if (typeof renderEventsPage === 'function') renderEventsPage();
+  } else if (viewId === 'jobs') {
+    if (typeof renderJobsPage === 'function') renderJobsPage();
+  } else if (viewId === 'gallery') {
+    if (typeof renderGalleryPage === 'function') renderGalleryPage();
+  } else if (viewId === 'mentorship') {
+    if (typeof renderMentorshipPage === 'function') renderMentorshipPage();
+  } else if (viewId === 'settings') {
+    if (typeof renderSettingsPage === 'function') renderSettingsPage();
   }
-  
+
   // Scroll content to top
   const mainContent = document.querySelector('.main-content');
   if (mainContent) mainContent.scrollTop = 0;
@@ -2188,3 +2207,837 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+// =============================================
+//  NEW SECTIONS — SEED DATA
+// =============================================
+
+const SEED_EVENTS = [
+  {
+    id: 'ev_1',
+    title: 'Annual National Reunion Conference 2026',
+    date: '2026-08-15',
+    venue: 'Abuja International Conference Centre',
+    category: 'Conference',
+    description: 'Join us for the flagship annual gathering of MUSGAAU alumni nationwide. Keynotes, networking sessions, career fair, and halal dinner.',
+    rsvps: []
+  },
+  {
+    id: 'ev_2',
+    title: 'Lagos Chapter Monthly Salah & Networking',
+    date: '2026-07-25',
+    venue: 'Lekki Central Mosque, Lagos',
+    category: 'Prayer',
+    description: 'Monthly jumu\'ah prayer gathering followed by an informal networking session for Lagos-based alumni.',
+    rsvps: []
+  },
+  {
+    id: 'ev_3',
+    title: 'Career Development & CV Workshop',
+    date: '2026-08-05',
+    venue: 'Zoom (Online)',
+    category: 'Workshop',
+    description: 'A live virtual workshop covering CV building, LinkedIn optimization, and interview techniques. Open to all alumni.',
+    rsvps: []
+  },
+  {
+    id: 'ev_4',
+    title: 'MUSGAAU Fundraising Dinner 2026',
+    date: '2026-09-20',
+    venue: 'Transcorp Hilton, Abuja',
+    category: 'Fundraiser',
+    description: 'Black-tie fundraising dinner to raise funds for the AAUA campus mosque renovation and student scholarship fund.',
+    rsvps: []
+  }
+];
+
+const SEED_JOBS = [
+  {
+    id: 'job_1',
+    title: 'QA Engineering Intern',
+    company: 'Microsoft Nigeria',
+    location: 'Lagos, Nigeria',
+    type: 'Internship',
+    field: 'Technology',
+    salary: '₦150k/month',
+    description: 'We are looking for fresh Computer Science graduates (2024–2025) to join our Lagos QA team. Must know Python, Selenium, and have strong attention to detail.',
+    applyLink: 'careers@microsoft.com',
+    posterEmail: 'mariam.adebayo@outlook.com',
+    posterName: 'Mariam Adebayo',
+    date: '2026-05-29T14:15:00Z'
+  },
+  {
+    id: 'job_2',
+    title: 'Freelance HTML Email Designer',
+    company: 'Oyebanji Labs',
+    location: 'Remote',
+    type: 'Remote',
+    field: 'Design / Technology',
+    salary: '₦75,000 (Fixed)',
+    description: 'Need a junior designer to format HTML email newsletters for a local client. Must know HTML, CSS, and email marketing templates. Short-term 2-week project.',
+    applyLink: 'ibrahim.dev@contractor.co',
+    posterEmail: 'ibrahim.dev@contractor.co',
+    posterName: 'Ibrahim Oyebanji',
+    date: '2026-05-31T11:10:00Z'
+  },
+  {
+    id: 'job_3',
+    title: 'Investment Banking Analyst',
+    company: 'Stanbic IBTC',
+    location: 'Victoria Island, Lagos',
+    type: 'Full-time',
+    field: 'Finance / Economics',
+    salary: '₦450k–₦600k/month',
+    description: 'Stanbic IBTC is recruiting analysts for our investment banking division. Strong financial modeling skills, CFA Level I preferred. Exceptional graduates encouraged to apply.',
+    applyLink: 'https://stanbicibtc.com/careers',
+    posterEmail: 'fatima.dahunsi@gmail.com',
+    posterName: 'Fatima Dahunsi',
+    date: '2026-06-01T09:00:00Z'
+  },
+  {
+    id: 'job_4',
+    title: 'Corporate Legal Consultant',
+    company: 'Alao & Associates',
+    location: 'Abuja, Nigeria',
+    type: 'Contract',
+    field: 'Law',
+    salary: '₦200k–₦350k/month',
+    description: 'Experienced corporate legal consultants needed for startup incorporation, IP registration, and commercial agreements. LLB + 2 years call experience required.',
+    applyLink: 'zainab.alao@lawfirm.com',
+    posterEmail: 'zainab.alao@lawfirm.com',
+    posterName: 'Zainab Alao Esq.',
+    date: '2026-06-03T10:30:00Z'
+  }
+];
+
+const SEED_GALLERY = [
+  { id: 'gal_1', caption: 'National Reunion 2024 — Abuja', category: 'Reunion', color: '#064e3b' },
+  { id: 'gal_2', caption: 'Lagos Chapter Jumu\'ah — March 2025', category: 'Prayer', color: '#78350f' },
+  { id: 'gal_3', caption: 'CV Workshop Virtual Session', category: 'Workshop', color: '#1e3a8a' },
+  { id: 'gal_4', caption: 'AAUA Campus Visit — Alumni Day', category: 'Campus', color: '#581c87' },
+  { id: 'gal_5', caption: 'Scholarship Presentation Ceremony', category: 'Charity', color: '#034f43' },
+  { id: 'gal_6', caption: 'Executive Committee Meeting 2025', category: 'Reunion', color: '#7c2d12' }
+];
+
+const MENTOR_SKILLS_MAP = {
+  'Computer Science': ['Web Development', 'Data Science', 'Cloud (AWS)', 'Open Source'],
+  'Accounting': ['Tax Audit', 'ICAN / ACCA', 'Financial Modeling', 'Corporate Finance'],
+  'Islamic Studies': ['Academic Research', 'Islamic Finance', 'Dawah Strategy'],
+  'Law': ['Corporate Law', 'IP Law', 'Contract Drafting', 'Startup Legal'],
+  'Biochemistry': ['Biotech Research', 'Halal Healthcare', 'Lab Management'],
+  'Economics': ['Financial Analysis', 'Policy Research', 'Econometrics'],
+  'Political Science': ['Public Policy', 'NGO Management', 'Youth Programs'],
+  'Microbiology': ['Environmental Science', 'Water Treatment', 'Research Writing']
+};
+
+// =============================================
+//  NEW SECTIONS — DB INITIALIZATION UPGRADE
+// =============================================
+function initDatabaseUpgrade() {
+  if (!DB.events) DB.events = [...SEED_EVENTS];
+  if (!DB.jobs) DB.jobs = [...SEED_JOBS];
+  if (!DB.gallery) DB.gallery = [...SEED_GALLERY];
+  if (!DB.mentors) DB.mentors = [];
+  if (!DB.notifications) DB.notifications = [];
+  if (!DB.notifPrefs) DB.notifPrefs = { messages: true, majlis: true, dues: true, events: true };
+  if (!DB.privacyPrefs) DB.privacyPrefs = { showMarital: true, allowDM: true };
+
+  // Seed some notifications for logged-in user context
+  if (DB.notifications.length === 0) {
+    DB.notifications = [
+      { id: 'n1', type: 'message', icon: '💬', title: 'Mariam Adebayo sent you a Salaam', time: '2026-05-31T12:00:00Z', unread: true, action: 'chat' },
+      { id: 'n2', type: 'event', icon: '🗓️', title: 'New Event: Annual Conference 2026', time: '2026-06-01T08:00:00Z', unread: true, action: 'events' },
+      { id: 'n3', type: 'dues', icon: '💳', title: 'Dues Reminder: Annual Levy due soon', time: '2026-06-02T10:00:00Z', unread: false, action: 'dues' },
+      { id: 'n4', type: 'majlis', icon: '📢', title: 'Dr. Kabir Bello posted in Majlis', time: '2026-05-28T09:30:00Z', unread: false, action: 'majlis' }
+    ];
+  }
+
+  saveToStorage();
+}
+
+// =============================================
+//  NEW SECTIONS — NAVIGATION ROUTING
+// =============================================
+// All new view routing is now merged into the main navigateTo() function above.
+
+// =============================================
+//  NEW SECTIONS — syncAuthUIState UPGRADE
+// =============================================
+const _origSyncAuthUIState = syncAuthUIState;
+syncAuthUIState = function() {
+  _origSyncAuthUIState();
+
+  const activeUser = DB.members.find(m => m.email === DB.currentUser);
+  const isLoggedIn = !!activeUser;
+  const isActive = isLoggedIn && activeUser.status === 'active';
+
+  // Show/hide new nav items
+  const newNavItems = ['events', 'jobs', 'gallery', 'mentorship', 'settings'];
+  newNavItems.forEach(id => {
+    const nav = document.getElementById(`nav-${id}`);
+    const mob = document.getElementById(`mob-nav-${id}`);
+    if (nav) nav.style.display = isActive ? 'block' : 'none';
+    if (mob) mob.style.display = isActive ? 'flex' : 'none';
+  });
+
+  // Show/hide bell + search buttons
+  const bellBtn = document.getElementById('notif-bell-btn');
+  const searchBtn = document.getElementById('global-search-btn');
+  if (bellBtn) bellBtn.style.display = isActive ? 'flex' : 'none';
+  if (searchBtn) searchBtn.style.display = isActive ? 'flex' : 'none';
+
+  // Update notification badge
+  updateNotifBadge();
+
+  // Show/hide create-event button for admins
+  const createEventBtn = document.getElementById('create-event-btn');
+  if (createEventBtn) {
+    const isAdmin = isActive && (activeUser.role === 'Admin' || activeUser.role === 'Super Admin');
+    createEventBtn.style.display = isAdmin ? 'inline-flex' : 'none';
+  }
+};
+
+// =============================================
+//  NOTIFICATIONS CENTER
+// =============================================
+function updateNotifBadge() {
+  if (!DB.notifications) return;
+  const unread = DB.notifications.filter(n => n.unread).length;
+  const badge = document.getElementById('notif-badge-count');
+  if (!badge) return;
+  if (unread > 0) {
+    badge.textContent = unread > 9 ? '9+' : unread;
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+let notifPanelOpen = false;
+function toggleNotificationsPanel() {
+  const panel = document.getElementById('notif-panel');
+  if (!panel) return;
+  notifPanelOpen = !notifPanelOpen;
+  if (notifPanelOpen) {
+    renderNotifPanel();
+    panel.style.display = 'block';
+  } else {
+    panel.style.display = 'none';
+  }
+}
+
+function closeNotificationsPanel() {
+  const panel = document.getElementById('notif-panel');
+  if (panel) panel.style.display = 'none';
+  notifPanelOpen = false;
+}
+
+function renderNotifPanel() {
+  initDatabaseUpgrade();
+  const container = document.getElementById('notif-list-container');
+  if (!container) return;
+
+  if (!DB.notifications || DB.notifications.length === 0) {
+    container.innerHTML = '<div style="padding:2rem; text-align:center; color:var(--text-dark); font-size:0.85rem;">No notifications yet.</div>';
+    return;
+  }
+
+  container.innerHTML = [...DB.notifications].reverse().map(n => {
+    const timeStr = new Date(n.time).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    return `
+      <div class="notif-item ${n.unread ? 'unread' : ''}" onclick="handleNotifClick('${n.id}', '${n.action}')">
+        <div class="notif-icon" style="background:rgba(160,208,128,0.1); border:1px solid var(--glass-border);">${n.icon}</div>
+        <div class="notif-body" style="flex:1;">
+          <div class="notif-title">${n.title}</div>
+          <div class="notif-time">${timeStr}</div>
+        </div>
+        ${n.unread ? '<div class="notif-unread-dot"></div>' : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function handleNotifClick(id, action) {
+  // Mark as read
+  const notif = DB.notifications.find(n => n.id === id);
+  if (notif) notif.unread = false;
+  saveToStorage();
+  updateNotifBadge();
+  closeNotificationsPanel();
+  if (action) navigateTo(action);
+}
+
+// Add new notification helper
+function addNotification(icon, title, action) {
+  initDatabaseUpgrade();
+  const newNotif = {
+    id: `n_${Date.now()}`,
+    icon, title, action,
+    time: new Date().toISOString(),
+    unread: true
+  };
+  DB.notifications.push(newNotif);
+  saveToStorage();
+  updateNotifBadge();
+}
+
+// =============================================
+//  GLOBAL SEARCH
+// =============================================
+function openGlobalSearch() {
+  const overlay = document.getElementById('global-search-overlay');
+  if (overlay) {
+    overlay.style.display = 'flex';
+    setTimeout(() => {
+      const input = document.getElementById('global-search-input');
+      if (input) { input.value = ''; input.focus(); }
+      document.getElementById('global-search-results').innerHTML = '<div class="search-empty">Start typing to search alumni, posts, and jobs...</div>';
+    }, 50);
+  }
+}
+
+function closeGlobalSearch() {
+  const overlay = document.getElementById('global-search-overlay');
+  if (overlay) overlay.style.display = 'none';
+}
+
+function closeGlobalSearchIfOutside(event) {
+  if (event.target.id === 'global-search-overlay') closeGlobalSearch();
+}
+
+function handleGlobalSearch() {
+  const query = document.getElementById('global-search-input').value.trim().toLowerCase();
+  const resultsEl = document.getElementById('global-search-results');
+  if (!query) {
+    resultsEl.innerHTML = '<div class="search-empty">Start typing to search alumni, posts, and jobs...</div>';
+    return;
+  }
+
+  let html = '';
+
+  // Search Alumni
+  const matchedMembers = DB.members.filter(m =>
+    m.name.toLowerCase().includes(query) ||
+    m.department.toLowerCase().includes(query) ||
+    (m.bio && m.bio.toLowerCase().includes(query))
+  ).slice(0, 4);
+
+  if (matchedMembers.length > 0) {
+    html += '<div class="search-result-group">Alumni Members</div>';
+    html += matchedMembers.map(m => `
+      <div class="search-result-item" onclick="closeGlobalSearch(); openAlumniDetailsModal('${m.email}')">
+        <img src="${getAvatarUrl(m.avatarSeed, m.name)}" alt="${m.name}">
+        <div><div class="sr-label">${m.name}</div><div class="sr-sub">${m.department} · ${m.year}</div></div>
+      </div>
+    `).join('');
+  }
+
+  // Search Posts
+  const matchedPosts = DB.posts.filter(p =>
+    p.content.toLowerCase().includes(query) ||
+    p.category.toLowerCase().includes(query) ||
+    p.authorName.toLowerCase().includes(query)
+  ).slice(0, 3);
+
+  if (matchedPosts.length > 0) {
+    html += '<div class="search-result-group">Majlis Posts</div>';
+    html += matchedPosts.map(p => `
+      <div class="search-result-item" onclick="closeGlobalSearch(); navigateTo('majlis')">
+        <div class="sr-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+        <div><div class="sr-label">${p.content.substring(0, 55)}...</div><div class="sr-sub">By ${p.authorName} · ${p.category}</div></div>
+      </div>
+    `).join('');
+  }
+
+  // Search Jobs
+  if (DB.jobs) {
+    const matchedJobs = DB.jobs.filter(j =>
+      j.title.toLowerCase().includes(query) ||
+      j.company.toLowerCase().includes(query) ||
+      j.field.toLowerCase().includes(query) ||
+      j.description.toLowerCase().includes(query)
+    ).slice(0, 3);
+
+    if (matchedJobs.length > 0) {
+      html += '<div class="search-result-group">Job Listings</div>';
+      html += matchedJobs.map(j => `
+        <div class="search-result-item" onclick="closeGlobalSearch(); navigateTo('jobs')">
+          <div class="sr-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></div>
+          <div><div class="sr-label">${j.title}</div><div class="sr-sub">${j.company} · ${j.type} · ${j.location}</div></div>
+        </div>
+      `).join('');
+    }
+  }
+
+  if (!html) html = '<div class="search-empty">No results found for "<strong>' + query + '</strong>"</div>';
+  resultsEl.innerHTML = html;
+}
+
+// =============================================
+//  EVENTS PAGE
+// =============================================
+function renderEventsPage() {
+  initDatabaseUpgrade();
+  const container = document.getElementById('events-list-container');
+  if (!container) return;
+
+  // Show admin create button
+  const activeUser = DB.members.find(m => m.email === DB.currentUser);
+  const createBtn = document.getElementById('create-event-btn');
+  if (createBtn && activeUser) {
+    createBtn.style.display = (activeUser.role === 'Admin' || activeUser.role === 'Super Admin') ? 'inline-flex' : 'none';
+  }
+
+  if (!DB.events || DB.events.length === 0) {
+    container.innerHTML = '<div style="text-align:center;color:var(--text-dark);padding:3rem;grid-column:1/-1;">No events scheduled yet.</div>';
+    return;
+  }
+
+  const sorted = [...DB.events].sort((a, b) => new Date(a.date) - new Date(b.date));
+  container.innerHTML = sorted.map(ev => {
+    const d = new Date(ev.date);
+    const month = d.toLocaleDateString('en-US', { month: 'short' });
+    const day = d.getDate();
+    const isRsvpd = ev.rsvps && DB.currentUser && ev.rsvps.includes(DB.currentUser);
+    const daysUntil = Math.ceil((d - new Date()) / (1000 * 60 * 60 * 24));
+    const isPast = daysUntil < 0;
+    return `
+      <div class="event-card">
+        <div class="event-card-header">
+          <div>
+            <span class="event-cat-pill">${ev.category}</span>
+            ${!isPast && daysUntil <= 7 ? `<span class="event-cat-pill" style="background:rgba(239,68,68,0.1);border-color:#ef4444;color:#f87171;margin-left:4px;">Soon</span>` : ''}
+          </div>
+          <div class="event-date-badge">
+            <div class="month">${month}</div>
+            <div class="day">${day}</div>
+          </div>
+        </div>
+        <h3>${ev.title}</h3>
+        <div class="event-meta">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          ${ev.venue}
+        </div>
+        <p class="event-desc">${ev.description}</p>
+        ${isPast
+          ? `<div style="text-align:center;font-size:0.8rem;color:var(--text-dark);padding:0.5rem;border:1px solid var(--glass-border);border-radius:10px;">Event has passed</div>`
+          : `<button class="event-rsvp-btn ${isRsvpd ? 'rsvp-joined' : ''}" onclick="toggleEventRSVP('${ev.id}', this)">
+              ${isRsvpd ? '✓ RSVP\'d — You\'re Attending' : 'RSVP to Attend'}
+            </button>`
+        }
+        <div style="font-size:0.7rem;color:var(--text-dark);margin-top:0.75rem;text-align:right;">${(ev.rsvps||[]).length} attending</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleEventRSVP(eventId, btn) {
+  if (!DB.currentUser) { triggerAlert('Sign in to RSVP', true); return; }
+  const ev = DB.events.find(e => e.id === eventId);
+  if (!ev) return;
+  if (!ev.rsvps) ev.rsvps = [];
+  const idx = ev.rsvps.indexOf(DB.currentUser);
+  if (idx === -1) {
+    ev.rsvps.push(DB.currentUser);
+    btn.textContent = "✓ RSVP'd — You're Attending";
+    btn.classList.add('rsvp-joined');
+    triggerAlert('You have RSVP\'d to this event!');
+    addNotification('🗓️', `RSVP confirmed: ${ev.title}`, 'events');
+  } else {
+    ev.rsvps.splice(idx, 1);
+    btn.textContent = "RSVP to Attend";
+    btn.classList.remove('rsvp-joined');
+    triggerAlert('RSVP cancelled.');
+  }
+  // Update count
+  btn.closest('.event-card').querySelector('[style*="attending"]').textContent = `${ev.rsvps.length} attending`;
+  saveToStorage();
+}
+
+function openCreateEventModal() {
+  document.getElementById('create-event-form').reset();
+  document.getElementById('create-event-modal').classList.add('open');
+}
+function closeCreateEventModal(event) {
+  if (!event || event.target.id === 'create-event-modal' || event.target.classList.contains('modal-close-btn')) {
+    document.getElementById('create-event-modal').classList.remove('open');
+  }
+}
+function handleCreateEvent(event) {
+  event.preventDefault();
+  const newEv = {
+    id: `ev_${Date.now()}`,
+    title: document.getElementById('event-title-input').value.trim(),
+    date: document.getElementById('event-date-input').value,
+    venue: document.getElementById('event-venue-input').value.trim(),
+    category: document.getElementById('event-cat-input').value,
+    description: document.getElementById('event-desc-input').value.trim(),
+    rsvps: []
+  };
+  DB.events.push(newEv);
+  saveToStorage();
+  closeCreateEventModal(null);
+  triggerAlert(`Event "${newEv.title}" published!`);
+  addNotification('🗓️', `New Event: ${newEv.title}`, 'events');
+  renderEventsPage();
+}
+
+// =============================================
+//  JOB BOARD
+// =============================================
+function renderJobsPage() {
+  initDatabaseUpgrade();
+  filterJobs();
+}
+
+function filterJobs() {
+  const query = (document.getElementById('jobs-search-input')?.value || '').toLowerCase().trim();
+  const typeFilter = document.getElementById('jobs-filter-type')?.value || 'all';
+  const container = document.getElementById('jobs-list-container');
+  if (!container || !DB.jobs) return;
+
+  const filtered = DB.jobs.filter(j => {
+    const matchesText = !query || j.title.toLowerCase().includes(query) || j.company.toLowerCase().includes(query) || j.field.toLowerCase().includes(query) || j.description.toLowerCase().includes(query);
+    const matchesType = typeFilter === 'all' || j.type === typeFilter;
+    return matchesText && matchesType;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div style="text-align:center;color:var(--text-dark);padding:3rem;grid-column:1/-1;">No job listings match your search.</div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(j => {
+    const poster = DB.members.find(m => m.email === j.posterEmail);
+    const dateStr = new Date(j.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const remoteClass = j.type === 'Remote' ? 'remote' : '';
+    return `
+      <div class="job-card">
+        <div class="job-card-top">
+          <div>
+            <div class="job-title">${j.title}</div>
+            <div class="job-company">${j.company}</div>
+          </div>
+          <span class="job-type-badge ${remoteClass}">${j.type}</span>
+        </div>
+        <div class="job-meta-row">
+          <div class="job-meta-item">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            ${j.location}
+          </div>
+          <div class="job-meta-item">
+            <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            ${j.field}
+          </div>
+        </div>
+        ${j.salary ? `<div class="job-salary">💰 ${j.salary}</div>` : ''}
+        <div class="job-desc">${j.description}</div>
+        <button class="job-apply-btn" onclick="handleJobApply('${j.id}')">Apply Now</button>
+        <div class="job-poster">Posted by ${j.posterName} · ${dateStr}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function handleJobApply(jobId) {
+  const job = DB.jobs.find(j => j.id === jobId);
+  if (!job) return;
+  if (job.applyLink && job.applyLink.startsWith('http')) {
+    window.open(job.applyLink, '_blank');
+  } else {
+    triggerAlert(`Application contact: ${job.applyLink || 'Contact the poster directly.'}`);
+  }
+}
+
+function openPostJobModal() {
+  document.getElementById('post-job-form').reset();
+  document.getElementById('post-job-modal').classList.add('open');
+}
+function closePostJobModal(event) {
+  if (!event || event.target.id === 'post-job-modal' || event.target.classList.contains('modal-close-btn')) {
+    document.getElementById('post-job-modal').classList.remove('open');
+  }
+}
+function handlePostJob(event) {
+  event.preventDefault();
+  const activeUser = DB.members.find(m => m.email === DB.currentUser);
+  const newJob = {
+    id: `job_${Date.now()}`,
+    title: document.getElementById('job-title-input').value.trim(),
+    company: document.getElementById('job-company-input').value.trim(),
+    location: document.getElementById('job-location-input').value.trim(),
+    type: document.getElementById('job-type-input').value,
+    field: document.getElementById('job-field-input').value.trim(),
+    salary: document.getElementById('job-salary-input').value.trim(),
+    description: document.getElementById('job-desc-input').value.trim(),
+    applyLink: document.getElementById('job-link-input').value.trim(),
+    posterEmail: activeUser.email,
+    posterName: activeUser.name,
+    date: new Date().toISOString()
+  };
+  DB.jobs.push(newJob);
+  saveToStorage();
+  closePostJobModal(null);
+  triggerAlert(`Job listing "${newJob.title}" published!`);
+  // Update landing page job stat
+  document.getElementById('stat-jobs-count').textContent = DB.posts.filter(p => p.category === 'Career & Jobs').length + DB.jobs.length;
+  renderJobsPage();
+}
+
+// =============================================
+//  GALLERY PAGE
+// =============================================
+let galleryFilter = 'All';
+
+function renderGalleryPage() {
+  initDatabaseUpgrade();
+  const filterRow = document.getElementById('gallery-filter-row');
+  const gridContainer = document.getElementById('gallery-grid-container');
+  if (!filterRow || !gridContainer) return;
+
+  const categories = ['All', ...new Set(DB.gallery.map(g => g.category))];
+  filterRow.innerHTML = categories.map(cat => `
+    <button class="gallery-filter-btn ${cat === galleryFilter ? 'active' : ''}" onclick="setGalleryFilter('${cat}')">${cat}</button>
+  `).join('');
+
+  const filtered = galleryFilter === 'All' ? DB.gallery : DB.gallery.filter(g => g.category === galleryFilter);
+
+  gridContainer.innerHTML = filtered.map(item => `
+    <div class="gallery-item">
+      <div style="width:100%;height:100%;background:linear-gradient(135deg, ${item.color}88, ${item.color}22); display:flex; align-items:center; justify-content:center;">
+        <div style="text-align:center; color:white; opacity:0.5;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </div>
+      </div>
+      <div class="gallery-item-overlay">
+        <div class="caption">${item.caption}</div>
+        <div class="gallery-cat">${item.category}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function setGalleryFilter(cat) {
+  galleryFilter = cat;
+  renderGalleryPage();
+}
+
+// =============================================
+//  MENTORSHIP HUB
+// =============================================
+function renderMentorshipPage() {
+  initDatabaseUpgrade();
+  const container = document.getElementById('mentors-list-container');
+  if (!container) return;
+
+  const activeUser = DB.members.find(m => m.email === DB.currentUser);
+  const isMentor = DB.mentors && DB.mentors.includes(DB.currentUser);
+  const mentorBtn = document.getElementById('become-mentor-btn');
+  const mentorLabel = document.getElementById('mentor-btn-label');
+  if (mentorLabel) mentorLabel.textContent = isMentor ? 'Withdraw as Mentor' : 'Become a Mentor';
+  if (mentorBtn) mentorBtn.style.background = isMentor ? 'rgba(239,68,68,0.15)' : '';
+
+  // Build mentor list from featured members + any who opted in
+  const mentorEmails = new Set([
+    'kabir.bello@aaua.edu.ng',
+    'mariam.adebayo@outlook.com',
+    'zainab.alao@lawfirm.com',
+    'aminah.audit@pwc.com',
+    ...(DB.mentors || [])
+  ]);
+
+  const mentorMembers = DB.members.filter(m => mentorEmails.has(m.email) && m.status === 'active');
+
+  if (mentorMembers.length === 0) {
+    container.innerHTML = '<div style="text-align:center;color:var(--text-dark);padding:3rem;grid-column:1/-1;">No mentors available yet. Be the first!</div>';
+    return;
+  }
+
+  container.innerHTML = mentorMembers.map(m => {
+    const skills = MENTOR_SKILLS_MAP[m.department] || ['Professional Guidance', 'Career Advice'];
+    const isSelf = m.email === DB.currentUser;
+    return `
+      <div class="mentor-card">
+        <div class="mentor-badge">Mentor</div>
+        <img src="${getAvatarUrl(m.avatarSeed, m.name)}" alt="${m.name}">
+        <h3>${m.name}</h3>
+        <div class="mentor-dept">${m.department} (${m.year}) · ${m.location.split(',')[0]}</div>
+        <div class="mentor-skills">
+          ${skills.map(s => `<span class="mentor-skill-tag">${s}</span>`).join('')}
+        </div>
+        ${isSelf
+          ? `<div style="font-size:0.8rem;color:var(--text-gray);padding:0.5rem;text-align:center;">You are listed as a mentor</div>`
+          : `<button class="mentor-contact-btn" onclick="initiateDirectMessage('${m.email}')">Request Mentorship</button>`
+        }
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleMentorStatus() {
+  if (!DB.currentUser) return;
+  initDatabaseUpgrade();
+  const idx = DB.mentors.indexOf(DB.currentUser);
+  if (idx === -1) {
+    DB.mentors.push(DB.currentUser);
+    triggerAlert('You are now listed as a mentor! Other alumni can find and contact you.');
+  } else {
+    DB.mentors.splice(idx, 1);
+    triggerAlert('You have been removed from the mentors list.');
+  }
+  saveToStorage();
+  renderMentorshipPage();
+}
+
+// =============================================
+//  ACCOUNT SETTINGS PAGE
+// =============================================
+function renderSettingsPage() {
+  initDatabaseUpgrade();
+  const prefs = DB.notifPrefs || {};
+  const privacy = DB.privacyPrefs || {};
+
+  const setPref = (id, val) => { const el = document.getElementById(id); if (el) el.checked = val !== false; };
+  setPref('notif-pref-messages', prefs.messages);
+  setPref('notif-pref-majlis', prefs.majlis);
+  setPref('notif-pref-dues', prefs.dues);
+  setPref('notif-pref-events', prefs.events);
+  setPref('privacy-show-marital', privacy.showMarital);
+  setPref('privacy-allow-dm', privacy.allowDM);
+
+  if (document.getElementById('settings-current-pass')) {
+    document.getElementById('settings-current-pass').value = '';
+    document.getElementById('settings-new-pass').value = '';
+  }
+}
+
+function handleChangePassword(event) {
+  event.preventDefault();
+  const currentPass = document.getElementById('settings-current-pass').value;
+  const newPass = document.getElementById('settings-new-pass').value;
+  const activeUser = DB.members.find(m => m.email === DB.currentUser);
+  if (!activeUser) return;
+
+  if (activeUser.password !== currentPass) {
+    triggerAlert('Current password is incorrect.', true);
+    return;
+  }
+  if (newPass.length < 6) {
+    triggerAlert('New password must be at least 6 characters.', true);
+    return;
+  }
+  activeUser.password = newPass;
+  saveToStorage();
+  triggerAlert('Password updated successfully!');
+  document.getElementById('settings-current-pass').value = '';
+  document.getElementById('settings-new-pass').value = '';
+}
+
+function saveNotifPrefs() {
+  initDatabaseUpgrade();
+  DB.notifPrefs = {
+    messages: document.getElementById('notif-pref-messages')?.checked !== false,
+    majlis: document.getElementById('notif-pref-majlis')?.checked !== false,
+    dues: document.getElementById('notif-pref-dues')?.checked !== false,
+    events: document.getElementById('notif-pref-events')?.checked !== false
+  };
+  saveToStorage();
+  triggerAlert('Notification preferences saved.');
+}
+
+function savePrivacyPrefs() {
+  initDatabaseUpgrade();
+  DB.privacyPrefs = {
+    showMarital: document.getElementById('privacy-show-marital')?.checked !== false,
+    allowDM: document.getElementById('privacy-allow-dm')?.checked !== false
+  };
+  saveToStorage();
+  triggerAlert('Privacy settings updated.');
+}
+
+function handleDeactivateAccount() {
+  const confirmed = confirm('Are you sure you want to deactivate your account? You will be logged out and your profile will be suspended.');
+  if (!confirmed) return;
+  const userIdx = DB.members.findIndex(m => m.email === DB.currentUser);
+  if (userIdx !== -1) DB.members[userIdx].status = 'suspended';
+  DB.currentUser = null;
+  saveToStorage();
+  syncAuthUIState();
+  triggerAlert('Your account has been deactivated.');
+  navigateTo('landing');
+}
+
+// =============================================
+//  ADMIN ANALYTICS
+// =============================================
+function renderAnalytics() {
+  initDatabaseUpgrade();
+  const activeUser = DB.members.find(m => m.email === DB.currentUser);
+  if (!activeUser || (activeUser.role !== 'Admin' && activeUser.role !== 'Super Admin')) return;
+
+  // KPIs
+  const totalEl = document.getElementById('analytic-total-members');
+  const rateEl = document.getElementById('analytic-dues-rate');
+  const pendingEl = document.getElementById('analytic-pending');
+  const postsEl = document.getElementById('analytic-posts');
+
+  if (totalEl) totalEl.textContent = DB.members.length;
+  if (postsEl) postsEl.textContent = DB.posts.length;
+
+  const activeMembers = DB.members.filter(m => m.role === 'Member' && m.status === 'active');
+  const paidCount = activeMembers.filter(m => DB.memberDues[m.email.toLowerCase()] === 'Paid').length;
+  const duesRate = activeMembers.length > 0 ? Math.round((paidCount / activeMembers.length) * 100) : 0;
+  if (rateEl) rateEl.textContent = `${duesRate}%`;
+
+  const pending = DB.members.filter(m => m.status === 'pending').length;
+  if (pendingEl) pendingEl.textContent = pending;
+
+  // Department Breakdown
+  const deptEl = document.getElementById('analytics-dept-breakdown');
+  if (deptEl) {
+    const deptCounts = {};
+    DB.members.forEach(m => { deptCounts[m.department] = (deptCounts[m.department] || 0) + 1; });
+    const max = Math.max(...Object.values(deptCounts), 1);
+    deptEl.innerHTML = Object.entries(deptCounts).map(([dept, count]) => `
+      <div class="analytics-bar-row">
+        <div class="analytics-bar-label">${dept.split(' ')[0]}</div>
+        <div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:${Math.round((count/max)*100)}%"></div></div>
+        <div class="analytics-bar-count">${count}</div>
+      </div>
+    `).join('');
+  }
+
+  // Employment Breakdown
+  const empEl = document.getElementById('analytics-employment-breakdown');
+  if (empEl) {
+    const empCounts = { 'Employed': 0, 'Self-Employed': 0, 'Unemployed': 0, 'Student': 0 };
+    DB.members.forEach(m => { if (empCounts[m.employment] !== undefined) empCounts[m.employment]++; });
+    const maxE = Math.max(...Object.values(empCounts), 1);
+    empEl.innerHTML = Object.entries(empCounts).map(([emp, count]) => `
+      <div class="analytics-bar-row">
+        <div class="analytics-bar-label">${emp}</div>
+        <div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:${Math.round((count/maxE)*100)}%; background:linear-gradient(90deg,var(--gold-primary),var(--gold-dark));"></div></div>
+        <div class="analytics-bar-count" style="color:var(--gold-primary);">${count}</div>
+      </div>
+    `).join('');
+  }
+}
+
+// Patch toggleAdminSubView to render analytics when that tab is clicked
+const _origToggleAdminSubView = toggleAdminSubView;
+toggleAdminSubView = function(tabId) {
+  _origToggleAdminSubView(tabId);
+  if (tabId === 'analytics') {
+    // The sub-view is now shown, render it
+    setTimeout(renderAnalytics, 100);
+  }
+};
+
+// =============================================
+//  INITIALIZE NEW DATA ON LOAD
+// =============================================
+window.addEventListener('DOMContentLoaded', () => {
+  // Run upgrade after DB is initialized
+  setTimeout(initDatabaseUpgrade, 100);
+}, { once: false });
+
